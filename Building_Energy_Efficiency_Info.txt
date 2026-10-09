@@ -1,0 +1,31 @@
+Building design parameters. Goal: predict heating and/or cooling load.
+
+INTENTIONAL DATA QUALITY ISSUES:
+- Missing values in compactness, areas, glazing
+- Outliers in Surface_Area and Heating_Load
+- Noise/ID columns: RecordID, FullName, Phone, ZodiacSign, FavoriteColor, Hobby
+- Exact redundant: Surface_Area_m2 == Surface_Area
+- High-cardinality: BuildingCode
+- Near-constant: Country
+- If predicting Heating_Load, Total_Load and Cooling_Load can leak information (and vice versa)
+- Different scales of geometric features
+
+* DATA (predictors):
+- RecordID, FullName, Phone, ZodiacSign, FavoriteColor, Hobby: irrelevant
+- Relative_Compactness: Relative compactness
+- Surface_Area: Surface area
+- Wall_Area: Wall area
+- Roof_Area: Roof area
+- Overall_Height: Overall height
+- Orientation: Building orientation code
+- Glazing_Area: Glazing area proportion
+- Glazing_Area_Distribution: Glazing distribution code
+- Surface_Area_m2: Duplicate of Surface_Area (redundant)
+- BuildingCode: Building ID (high cardinality)
+- Country: Country (near-constant)
+- Total_Load: Heating+Cooling (leakage if used to predict either load)
+- Cooling_Load: Cooling load (do not use if target is Heating_Load, and vice versa)
+
+* TARGET (choose one or both carefully):
+- Heating_Load: Heating load 
+- Cooling_Load: Cooling load 
